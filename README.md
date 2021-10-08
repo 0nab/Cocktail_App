@@ -10,4 +10,4 @@ The application has 6 things it can do.
 This app was made first to be run in the terminal. But now I have started to transition it to a UI. 
 This is why only two of the buttons work in the current version. These buttons are "search Cocktail" and "List of Cocktails (A-Z)".
 
-![Video of app](https://recordit.co/lQ2eXFk6Yc) <br />Video recorded with Recordit (https://recordit.co/)
+![Video of app](https://s3.amazonaws.com/img0.recordit.co/lQ2eXFk6Yc.mp4?AWSAccessKeyId=AKIAUQ5RURZ7ND2T2B6I&Expires=1633670167&Signature=FQV1ftZendR64iIWdEj0tXHPIr0%3D) <br />Video recorded with Recordit (https://recordit.co/)
