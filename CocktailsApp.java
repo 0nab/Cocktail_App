@@ -28,6 +28,8 @@ public class CocktailsApp extends JFrame {
 
 		printAllCocktailsGUI.handedV(v);
 		searchCocktailsGUI.handedV(v);
+		containsIngredientGUI.handedV(v);
+		cocktailsContainIngredientGUI.handedV(v);
 		/** 
 		int choice = 5;
 		do {
@@ -110,7 +112,6 @@ public class CocktailsApp extends JFrame {
 	//  	  If not found: text telling you that it does not exist
 	public static String searchCocktail(Vector<Cocktail> v, String cocktailString) {
 		String returnString;
-		System.out.println("Enter the cocktail you wish to search for: ");
 		String search = cocktailString;
 		search.toLowerCase();
 		Cocktail sCocktail = search(search,v);
@@ -140,23 +141,21 @@ public class CocktailsApp extends JFrame {
 	//Desc: Enter a ingredient and it gives you all the drinks that uses it
 	//Input: Ingredient (String)
 	//Output: List of cocktails and their description that include the ingredient
-	public static void containsIngredient(Vector<Cocktail> v) {
-		System.out.println("Enter the ingredient you are looking for in drinks");
-		keyboard.nextLine();
-		String ing = keyboard.nextLine().toLowerCase();
+	public static String containsIngredient(Vector<Cocktail> v, String ing) {
+		String returnStringCI = "";
 		boolean firstPrint = true;
 		for (Cocktail c: v) {
 			String[] ingList = c.getIngredients();
 			for (String s: ingList) {
 				if (s.compareTo(ing)==0) {
-					if(firstPrint == true) System.out.println("These are the Cocktails that contain " + ing + "\n" + "--------------------------");
+					if(firstPrint == true) returnStringCI = "<html>These are the Cocktails that contain " + ing + "<br/><br/><html/>";
 					firstPrint = false;
-					c.toCocktailString();
-					System.out.println("--------------------------");
+					returnStringCI = returnStringCI + c.toCocktailStringReturn();
 				}
 			}
 		}
-		if(firstPrint == true) System.out.print("There are no Cocktails that contain " + ing);
+		if(firstPrint == true) returnStringCI = "<html>There are no Cocktails that contain " + ing + "<html/>";
+		return returnStringCI;
 	}
 	
 	//Choice 3
@@ -189,15 +188,10 @@ public class CocktailsApp extends JFrame {
 	//Choice 4
 	//Desc: You enter all the ingredients you have and it gives a list of all coctails that 
 	//		you have all the ingredients for and all the ones that need one more ingredient
-	public static void cocktailsContainIngredient(Vector<Cocktail> v) {
-	boolean run = true;
-	Vector<String> ingredients = new Vector<String>();
-	String ing;
-		while(run == true){
-			System.out.print("Enter your ingredient or 'N' to look for coctails.");
-			ing = keyboard.nextLine().toLowerCase();
-			if (ing.compareTo("n")==0) run = false;
-			else ingredients.add(ing);
+	public static String cocktailsContainIngredient(Vector<Cocktail> v, Vector<String> ingcci) {
+		String returnStringCCI = "";
+		for (String s:ingcci){
+			System.out.println(s);
 		}
 		int count = 0;
 		Vector<Cocktail> allIng = new Vector<Cocktail>();
@@ -205,23 +199,22 @@ public class CocktailsApp extends JFrame {
 		for (Cocktail c:v) {
 			count = 0;
 			for (String n:c.getIngredients()) {
-				for (String s:ingredients){
+				for (String s:ingcci){
 					if (s.compareTo(n)==0) count++;
 				}
 			}
 			if (count == c.getIngredients().length) allIng.add(c);
 			if (count == c.getIngredients().length-1) missingIng.add(c);
 		}
-		System.out.println("These are the cocktails you posses all ingredients to: \n--------------------------");
+		returnStringCCI = returnStringCCI + "<html>These are the cocktails you posses all ingredients to:<br/><html/>";
 		for (Cocktail ct:allIng) {
-				ct.toCocktailString();
-				System.out.println("--------------------------");
+			returnStringCCI = returnStringCCI + ct.toCocktailStringReturn();
 		}
-		System.out.println("These are the cocktails that you are missing one ingredient to: \n--------------------------");
+		returnStringCCI = returnStringCCI + "<html>These are the cocktails that you are missing one ingredient to:<br/><html/>";
 		for (Cocktail ctMiss:missingIng) {
-				ctMiss.toCocktailString();
-				System.out.println("--------------------------");
+			returnStringCCI = returnStringCCI + ctMiss.toCocktailStringReturn();
 		}
+		return returnStringCCI;
 	}
 	
 	//Choice 5

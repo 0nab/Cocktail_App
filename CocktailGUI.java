@@ -3,6 +3,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.Vector;
 import java.util.function.Function;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +17,9 @@ public class CocktailGUI extends JFrame implements ActionListener {
 	JButton cocktailsContainIngredientButton;
 	JButton addCocktailButton;
 	JButton Submit;
+	JButton IngButton;
 	JTextField textField;
+	Vector<String> ingArray = new Vector<String>(); 
 	int choice;
 	
 	public CocktailGUI() {
@@ -55,6 +59,13 @@ public class CocktailGUI extends JFrame implements ActionListener {
 		addCocktailButton.setText("Add new cocktail");
 		addCocktailButton.setFocusable(false);
 
+		//Ingredient Button
+		IngButton = new JButton();
+		IngButton.setBounds(290, 400, 150, 25);
+		IngButton.addActionListener(this);
+		IngButton.setText("Add Ingridient");
+		IngButton.setFocusable(false);
+
 		//Submit Button
 		Submit = new JButton();
 		Submit.setBounds(315, 425, 100, 25);
@@ -78,10 +89,12 @@ public class CocktailGUI extends JFrame implements ActionListener {
 		this.add(cocktailsContainIngredientButton);
 		this.add(addCocktailButton);
 		this.add(Submit);
+		this.add(IngButton);
 		this.add(textField);
 		this.setResizable(false);
 		textField.setVisible(false);
 		Submit.setVisible(false);
+		IngButton.setVisible(false);
 		
 	}
 
@@ -116,7 +129,7 @@ public class CocktailGUI extends JFrame implements ActionListener {
 			printAllCocktailsGUI frame = new printAllCocktailsGUI();
 		}
 		if(e.getSource() == cocktailsContainIngredientButton) {
-			visable();
+			Ingvisable();
 			choice = 2;
 		}
 		if(e.getSource() == addCocktailButton) {
@@ -126,20 +139,46 @@ public class CocktailGUI extends JFrame implements ActionListener {
 		if(e.getSource() == Submit) {
 			Submited(choice);
 		}
+		if(e.getSource() == IngButton) {
+			IngSubmitted(choice);
+		}
 	}
 	public void visable() {
 		textField.setVisible(true);
 		Submit.setVisible(true);
+		IngButton.setVisible(false);
 	}
 	public void invisable() {
 		textField.setVisible(false);
 		textField.setText("");
 		Submit.setVisible(false);
+		IngButton.setVisible(false);
+	}
+	public void Ingvisable() {
+		textField.setVisible(true);
+		IngButton.setVisible(true);
+		Submit.setVisible(true);
 	}
 
 	public void Submited(int choice) {
 		if(choice == 0) {
 			searchCocktailsGUI frame = new searchCocktailsGUI(textField.getText());
+			textField.setText("");
+		}
+		else if(choice == 1) {
+			containsIngredientGUI frame = new containsIngredientGUI(textField.getText());
+			textField.setText("");
+		}
+		else if(choice == 2) {
+			cocktailsContainIngredientGUI frame = new cocktailsContainIngredientGUI(ingArray);
+			textField.setText("");
+		}
+	}
+
+	public void IngSubmitted(int choice) {
+		if(choice == 2) {
+			System.out.println("in IngSubmitted");
+			ingArray.add(textField.getText()); 
 			textField.setText("");
 		}
 	}
